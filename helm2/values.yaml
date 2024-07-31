@@ -2,7 +2,7 @@ deployment:
   name: tomcat-deploy-project
   replicaCount: 1
 image:
-  repository: fatimatabassum/fatima12
+  repository: jivedh2019/assign
   tag: IMAGE_TAG
   containerPort: 8080
 service:
