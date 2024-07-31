@@ -1,31 +1,30 @@
 pipeline{
-    agent none
+    agent {label 'docker_node_new'}
     environment{
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
     stages{
        stage('Git Checkout Stage'){
-            agent {label 'docker_node_new'}
             steps{
-                git branch: 'main', url: 'https://github.com/fatimatabassum05/java-example.git'
+                git branch: 'master', url: 'https://github.com/brad-jivedh/B_java-tomcat-maven-example.git'
             }
          }        
         stage('Build docker Image'){
-          agent {label 'docker_node_new'}
           steps{
-            sh 'docker build -t fatimatabassum/fatima12:IMAGE_TAG .'
+            sh 'docker build -t jivedh2019/assign:IMAGE_TAG .'
           }
         }
         stage('Push To Dockerhub'){
-          agent {label 'docker_node_new'}
           steps{
-            sh 'docker push fatimatabassum/fatima12:IMAGE_TAG'
+            sh 'docker push jivedh2019/assign:IMAGE_TAG'
           }
         }
         stage('Deploy Stage') {
-          agent {label 'k8s_node'}
           steps{
-            sh 'helm install helm1 helm1 -n prod'
+                withCredentials([aws(credentialsId: "awsCred", region: "ap-south-1")]) {
+                    sh 'aws eks --region ap-south-1 update-kubeconfig --name eks-cluster'
+                    sh 'helm upgrade --install tomcat-deploy-project ./helm1 -n prod'
+              }
           } 
         }
     }
