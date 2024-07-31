@@ -6,17 +6,17 @@ pipeline{
     stages{
        stage('Git Checkout Stage'){
             steps{
-                git branch: 'master', url: 'https://github.com/fatimatabassum05/java-tomcat-maven-example.git'
+                git branch: 'master', url: 'https://github.com/brad-jivedh/B_java-tomcat-maven-example.git'
             }
          }        
         stage('Build docker Image'){
           steps{
-            sh 'docker build -t fatimatabassum/fatima12:IMAGE_TAG .'
+            sh 'docker build -t jivedh2019/assign:IMAGE_TAG .'
           }
         }
         stage('Push To Dockerhub'){
           steps{
-            sh 'docker push fatimatabassum/fatima12:IMAGE_TAG'
+            sh 'docker push jivedh2019/assign:IMAGE_TAG'
           }
         }
         stage('Deploy Stage') {
