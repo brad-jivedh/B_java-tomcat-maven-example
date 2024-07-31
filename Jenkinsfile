@@ -23,7 +23,7 @@ pipeline{
           steps{
                 withCredentials([aws(credentialsId: "awsCredentials", region: "ap-south-1")]) {
                     sh 'aws eks --region ap-south-1 update-kubeconfig --name eks-cluster'
-                    sh 'helm upgrade --install tomcat-deploy-project ./helm -n dev'
+                    sh 'helm upgrade --install tomcat-deploy-project ./helm1 -n prod'
               }
           } 
         }
